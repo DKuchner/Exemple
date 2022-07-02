@@ -1,8 +1,8 @@
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import pages.*;
 import utils.ProductNames;
-import pages.SinglePage;
 
 import static com.codeborne.selenide.Selenide.*;
 
@@ -11,7 +11,7 @@ public class SaucedemoTest {
     @BeforeEach
     public void loginToSite() {
         String url = "https://www.saucedemo.com/";
-        SinglePage page = open(url,SinglePage.class);
+        LoginPage page = open(url,LoginPage.class);
         page.setLogin("standard_user")
                 .setPassword("secret_sauce")
                 .clickLoginButton();
@@ -24,50 +24,50 @@ public class SaucedemoTest {
     @Test
     public void addProductsToBasket() {
         for (ProductNames ignored : ProductNames.values()) {
-            page(SinglePage.class).addProductsToBasket();
+            page(MainPage.class).addProductsToBasket();
         }
-        page(SinglePage.class).basketBtnClick()
-                .checkCartItem(6);
+        page(MainPage.class).basketBtnClick();
+                page(BasketPage.class).checkCartItem(6);
     }
     @Test
     public void checkBasketNumber() {
         for (ProductNames ignored : ProductNames.values()) {
-            page(SinglePage.class).addProductsToBasket();
+            page(MainPage.class).addProductsToBasket();
         }
-            page(SinglePage.class).checkBasketBubble("6");
+            page(MainPage.class).checkBasketBubble("6");
     }
     @Test
     public void checkEmptyBasket() {
         for (ProductNames ignored : ProductNames.values()) {
-            page(SinglePage.class).addProductsToBasket();
+            page(MainPage.class).addProductsToBasket();
         }
-        page(SinglePage.class).basketBtnClick()
-                .checkOutClick()
-                .setFirstName("Alex")
+        page(MainPage.class).basketBtnClick();
+                page(BasketPage.class).checkOutBtnClick();
+                page(InformationPage.class).setFirstName("Alex")
                 .setLastName("Newman")
                 .setPostalCode("123456")
-                .continueBtnClick()
-                .finishBtnClick()
-                .basketBtnClick()
-                .checkCartItem(0);
+                .continueBtnClick();
+                page(OverviewPage.class).finishBtnClick();
+                page(CompletePage.class).basketBtnClick();
+                page(BasketPage.class).checkCartItem(0);
     }
     @Test
     public void openEachProduct() {
         for (ProductNames ignored : ProductNames.values()) {
-            page(SinglePage.class).openItem()
-                    .checkInventoryContainer();
+            page(MainPage.class).openItem();
+                    page(ItemPage.class).checkInventoryContainer();
             back();
         }
     }
     @Test
     public void deleteFromBasket() {
         for (ProductNames ignored : ProductNames.values()) {
-            page(SinglePage.class).addProductsToBasket();
+            page(MainPage.class).addProductsToBasket();
         }
-        page(SinglePage.class).basketBtnClick();
+        page(MainPage.class).basketBtnClick();
         for (ProductNames ignored : ProductNames.values()) {
-            page(SinglePage.class).removeBtnClick();
+            page(BasketPage.class).removeBtnClick();
         }
-        page(SinglePage.class).checkCartItem(0);
+        page(BasketPage.class).checkCartItem(0);
     }
 }
