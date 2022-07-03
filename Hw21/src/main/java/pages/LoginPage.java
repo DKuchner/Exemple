@@ -4,6 +4,8 @@ import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 
+import static com.codeborne.selenide.Selenide.open;
+
 public class LoginPage {
     @FindBy(xpath = "//input[@id='user-name']")
     public SelenideElement login;
@@ -22,6 +24,13 @@ public class LoginPage {
     }
     public LoginPage clickLoginButton() {
         this.loginBtn.shouldBe(Condition.visible).click();
+        return this;
+    }
+
+    public LoginPage login() {
+        this.setLogin("standard_user")
+                .setPassword("secret_sauce")
+                .clickLoginButton();
         return this;
     }
 }

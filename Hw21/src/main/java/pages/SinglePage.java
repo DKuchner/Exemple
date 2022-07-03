@@ -3,21 +3,10 @@ import com.codeborne.selenide.CollectionCondition;
 import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
-import org.jetbrains.annotations.NotNull;
-import org.openqa.selenium.By;
-import org.openqa.selenium.devtools.v100.page.Page;
+
 import org.openqa.selenium.support.FindBy;
-import utils.ProductNames;
-
-
-import static com.codeborne.selenide.Selenide.*;
-
 
 public class SinglePage {
-
-    public static @NotNull SinglePage singlePage() {
-        return page(SinglePage.class);
-    }
 
     @FindBy(xpath = "//input[@id='user-name']")
     public SelenideElement login;
@@ -61,10 +50,10 @@ public class SinglePage {
         return this;
     }
     @FindBy (xpath = "//button[@id='checkout']")
-    public SelenideElement checkOut;
+    public SelenideElement checkOutBtn;
 
-    public SinglePage checkOutClick(){
-        this.checkOut.shouldBe(Condition.visible).click();
+    public SinglePage checkOutBtnClick(){
+        this.checkOutBtn.shouldBe(Condition.visible).click();
         return this;
     }
     @FindBy (xpath = "//button[text()=\"Remove\"]")

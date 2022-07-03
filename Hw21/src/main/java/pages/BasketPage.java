@@ -6,6 +6,8 @@ import com.codeborne.selenide.ElementsCollection;
 import com.codeborne.selenide.SelenideElement;
 import org.openqa.selenium.support.FindBy;
 
+import static com.codeborne.selenide.Selenide.page;
+
 public class BasketPage {
     @FindBy(xpath = "//button[@id='checkout']")
     public SelenideElement checkOutBtn;
@@ -28,4 +30,6 @@ public class BasketPage {
         this.removeBtn.shouldBe(Condition.visible).click();
         return this;
     }
+
+
 }

@@ -29,8 +29,16 @@ public class InformationPage {
     @FindBy (xpath = "//input[@id='continue']")
     public SelenideElement continueBtn;
 
-    public InformationPage continueBtnClick(){
+    public InformationPage continueBtnClick() {
         this.continueBtn.shouldBe(Condition.visible).click();
+        return this;
+    }
+
+    public InformationPage inputUserData() {
+        this.setFirstName("Alex")
+                .setLastName("Newman")
+                .setPostalCode("123456")
+                .continueBtnClick();
         return this;
     }
 }
