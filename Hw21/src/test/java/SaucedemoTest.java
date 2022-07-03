@@ -2,17 +2,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import pages.*;
-
+import steps.*;
+import utils.ProductNames;
 import static com.codeborne.selenide.Selenide.*;
-
 public class SaucedemoTest {
-
     @BeforeEach
     public void loginToSite() {
         String url = "https://www.saucedemo.com/";
         open(url);
-        page(LoginPage.class).login();
+        LoginPageSteps.login();
     }
     @AfterEach
     public void close() {
@@ -21,26 +19,39 @@ public class SaucedemoTest {
     @Test
     @DisplayName("Проверка на добавление всех товаров в корзину")
     public void addProductsToBasket() {
-        page(MainPage.class).addAllItemsToBasket();
+        MainPageSteps.addAllProductsToBasket();
+        BasketPageSteps.cartItem(6);
     }
     @Test
     @DisplayName("Проверка на соответсвие номера на пузырьке корзины количеству добаленных товаров")
     public void checkBasketNumber() {
-        page(MainPage.class).chekBubbleNumberAfterAddProduct();
+        MainPageSteps.addAllProductsToBasket();
+        MainPageSteps.checkBubbleNumber("6");
     }
     @Test
     @DisplayName("Проверка на то, что корзина пуста после оформления заказа")
     public void checkEmptyBasket() {
-        page(MainPage.class).checkEmptyBasketAfterOrder();
+        MainPageSteps.addAllProductsToBasket();
+        BasketPageSteps.checkOut();
+        InformationPageSteps.inputUserData("Alex","Newman", "123456");
+        OverwiewPageSteps.clickFinishButton();
+        CompletePageSteps.basketButtonClick();
+        BasketPageSteps.cartItem(0);
     }
     @Test
     @DisplayName("Проверка на открытие каждого товара на странице")
     public void openEachProduct() {
-        page(MainPage.class).checkEachItem();
+        for (ProductNames ignored : ProductNames.values()){
+            MainPageSteps.openItem();
+            ItemPageSteps.checkItemOnPage();
+            back();
+        }
     }
     @Test
     @DisplayName("Проверка на возможность удаления товара из корзины")
     public void deleteFromBasket() {
-            page(MainPage.class).checkRemoveProductFromBasket();
+          MainPageSteps.addProductToBasket();
+          BasketPageSteps.removeButtonClick();
+          BasketPageSteps.cartItem(0);
     }
 }

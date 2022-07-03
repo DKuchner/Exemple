@@ -1,15 +1,8 @@
 package pages;
-
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.support.FindBy;
-
+import org.openqa.selenium.By;
+import static com.codeborne.selenide.Selenide.$;
 public class CompletePage {
-    @FindBy(xpath = "//*[@class='shopping_cart_link']")
-    public SelenideElement basketBtn;
+    public SelenideElement basketBtn = $(By.xpath("//*[@class='shopping_cart_link']"));
 
-    public CompletePage basketBtnClick(){
-        this.basketBtn.shouldBe(Condition.visible).click();
-        return this;
-    }
 }

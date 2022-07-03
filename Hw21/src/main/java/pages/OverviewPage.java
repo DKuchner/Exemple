@@ -1,15 +1,8 @@
 package pages;
-
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.support.FindBy;
-
+import org.openqa.selenium.By;
+import static com.codeborne.selenide.Selenide.$;
 public class OverviewPage {
-    @FindBy(xpath = "//button[@id='finish']")
-    public SelenideElement finishBtn;
+    public SelenideElement finishBtn = $(By.xpath("//button[@id='finish']"));
 
-    public OverviewPage finishBtnClick() {
-        this.finishBtn.shouldBe(Condition.visible).click();
-        return this;
-    }
 }

@@ -1,44 +1,10 @@
 package pages;
-
-import com.codeborne.selenide.Condition;
 import com.codeborne.selenide.SelenideElement;
-import org.openqa.selenium.support.FindBy;
-
+import org.openqa.selenium.By;
+import static com.codeborne.selenide.Selenide.$;
 public class InformationPage {
-    @FindBy(xpath = "//input[@id='first-name']")
-    public SelenideElement firstName;
-
-    public InformationPage setFirstName(String firstName) {
-        this.firstName.sendKeys(firstName);
-        return this;
-    }
-    @FindBy (xpath = "//input[@id='last-name']")
-    public SelenideElement lastName;
-
-    public InformationPage  setLastName(String lastName) {
-        this.lastName.sendKeys(lastName);
-        return this;
-    }
-    @FindBy (xpath = "//input[@id='postal-code']")
-    public SelenideElement postalCode;
-
-    public InformationPage setPostalCode(String postalCode) {
-        this.postalCode.sendKeys(postalCode);
-        return this;
-    }
-    @FindBy (xpath = "//input[@id='continue']")
-    public SelenideElement continueBtn;
-
-    public InformationPage continueBtnClick() {
-        this.continueBtn.shouldBe(Condition.visible).click();
-        return this;
-    }
-
-    public InformationPage inputUserData() {
-        this.setFirstName("Alex")
-                .setLastName("Newman")
-                .setPostalCode("123456")
-                .continueBtnClick();
-        return this;
-    }
+    public SelenideElement firstName = $(By.xpath("//input[@id='first-name']"));
+    public SelenideElement lastName = $(By.xpath("//input[@id='last-name']"));
+    public SelenideElement postalCode = $(By.xpath("//input[@id='postal-code']"));
+    public SelenideElement continueBtn = $(By.xpath("//input[@id='continue']"));
 }
